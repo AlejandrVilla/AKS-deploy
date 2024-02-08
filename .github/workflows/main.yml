@@ -1,0 +1,88 @@
+name: Ejecutar Script de Shell
+
+# eventos
+on:
+  push:
+    branches:
+      - main
+
+# jobs en el flujo de trabajo
+jobs:
+  build-app:
+    # entorno
+    runs-on: self-hosted
+    
+    # variables de entorno
+    # env:
+    #   AZURE_KEYVAULT_URL: ${{ secrets.AZURE_KEYVAULT_URL }}
+    #   AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+    #   AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+    #   AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+    # pasos
+    steps:
+    - name: Checkout of source code
+      uses: actions/checkout@v2
+
+    - name: Check versions
+      run: bash pre-init.sh
+    
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+    - name: Azure CLI script
+      uses: azure/CLI@v1
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az account show
+
+    # - name: Access Azure Key Vault
+    #   run: |
+    #     keyvault_url=${{ secrets.AZURE_KEYVAULT_URL }}
+    #     client_id=${{ secrets.AZURE_CLIENT_ID }}
+    #     client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
+    #     tenant_id=${{ secrets.AZURE_TENANT_ID }}
+
+    # - name: Fetch Secrets from Azure Key Vault
+    #   run: |
+    #     # Authenticate to Azure Key Vault
+    #     az keyvault secret show --vault-name $AZURE_KEYVAULT_URL --name $keyvault_url --query value --output tsv
+    #   id: fetch_secret
+
+    # - name: Set Secrets as Environment Variables
+    #   run: |
+    #     echo "SECRET_VALUE=${{ steps.fetch_secret.outputs.stdout }}" >> $GITHUB_ENV
+
+    # - name: Use Secrets in Subsequent Steps
+    #   run: |
+    #     # You can now use $SECRET_VALUE as an environment variable in your subsequent steps.
+    #     # For example
+    #     echo $SECRET_VALUE
+      
+    - name: config
+      run: bash config.sh
+
+    - name: Clean
+      run: bash pre-build.sh
+
+    - name: Build and push
+      run: bash docker-build-push.sh
+
+    - name: Set up kubectl
+      uses: azure/k8s-set-context@v1
+      with:
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+    - name: Deploy to AKS
+      run: |
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/service.yaml
+
+    - name: Validate Deployment
+      run: kubectl get pods
+      
+    #- name: destroy
+    # run: destroy.sh

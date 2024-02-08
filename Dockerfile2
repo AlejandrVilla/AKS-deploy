@@ -1,0 +1,21 @@
+# Stage 1: Build with Gradle
+FROM gradle:7.3.3-jdk17 AS build
+
+WORKDIR /app
+
+COPY . /app/
+
+RUN ./gradlew clean build --no-daemon
+
+# Stage 2: Create a minimal runtime environment
+FROM madiva/openjdk17
+
+WORKDIR /app
+
+COPY --from=build app/build/libs/rest-service-0.0.1-SNAPSHOT.jar ./app.jar
+
+# Expose the port your application will run on
+EXPOSE 8080
+
+# Command to run your application
+CMD ["java", "-jar", "app.jar"]
