@@ -1,0 +1,20 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUU2VENDQXRHZ0F3SUJBZ0lSQU1uaU1JREhXTDJSemRGcU0zS1kxR0V3RFFZSktvWklodmNOQVFFTEJRQXcKRFRFTE1Ba0dBMVVFQXhNQ1kyRXdJQmNOTWpRd01qQTRNVGN4>
+    server: https://avhcluster-avhrg2-625c55-bwmehok4.hcp.westus2.azmk8s.io:443
+  name: avhclusterlab
+contexts:
+- context:
+    cluster: avhclusterlab
+    user: clusterUser_avhrg2_avhclusterlab
+  name: avhclusterlab
+current-context: avhclusterlab
+kind: Config
+preferences: {}
+users:
+- name: clusterUser_avhrg2_avhclusterlab
+  user:
+    client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZIakNDQXdhZ0F3SUJBZ0lSQU9VbzlyVGFDSTF6SFlUKzVVbGdnZDR3RFFZSktvWklodmNOQVFFTEJRQXcKRFRFTE1Ba0dBMVVFQXhNQ1kyRXdIaGNOTWpRd01qQTRNVGN4T0R>
+    client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlKS1FJQkFBS0NBZ0VBcUN2WGFjZnNwdXFRWWYybEV0OUFJNnhYSEZWcjkrMTkvVFpZR0FLTVorUnZxY3djCmV4Zk5XcG9CaFJINGczOE9YS05zL0luSUk5Z1l3MmVNVW11cXdaQzc>
+    token: ovsa4qutr0dbi21lp4xxcb7o0uc4qzq2hbz8a0w2l2w7ua11ygk6wphz1kdlnxzjkd43h95cd0x9y2ecykg24f0pxtm5td81i907mjkwsbfk4uryikexabrrocxxh6yy
