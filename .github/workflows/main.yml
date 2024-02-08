@@ -62,14 +62,14 @@ jobs:
     #     # For example
     #     echo $SECRET_VALUE
       
-    - name: config
-      run: bash config.sh
+    # - name: config
+    #   run: bash config.sh
 
-    - name: Clean
-      run: bash pre-build.sh
+    # - name: Clean
+    #   run: bash pre-build.sh
 
-    - name: Build and push
-      run: bash docker-build-push.sh
+    # - name: Build and push
+    #   run: bash docker-build-push.sh
 
     # - name: Set up kubectl
     #   uses: azure/k8s-set-context@v1
