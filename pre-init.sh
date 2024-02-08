@@ -8,7 +8,7 @@ if [ $? != 0 ]; then
 fi
 
 java --version
-if [ $? != 0 ]; then
+# if [ $? != 0 ]; then
     echo "actualizando openjdk"
     sudo apt-cache search openjdk
     sudo apt install openjdk-17-jdk -y
