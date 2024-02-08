@@ -38,29 +38,6 @@ jobs:
         azcliversion: latest
         inlineScript: |
           az account show
-
-    # - name: Access Azure Key Vault
-    #   run: |
-    #     keyvault_url=${{ secrets.AZURE_KEYVAULT_URL }}
-    #     client_id=${{ secrets.AZURE_CLIENT_ID }}
-    #     client_secret=${{ secrets.AZURE_CLIENT_SECRET }}
-    #     tenant_id=${{ secrets.AZURE_TENANT_ID }}
-
-    # - name: Fetch Secrets from Azure Key Vault
-    #   run: |
-    #     # Authenticate to Azure Key Vault
-    #     az keyvault secret show --vault-name $AZURE_KEYVAULT_URL --name $keyvault_url --query value --output tsv
-    #   id: fetch_secret
-
-    # - name: Set Secrets as Environment Variables
-    #   run: |
-    #     echo "SECRET_VALUE=${{ steps.fetch_secret.outputs.stdout }}" >> $GITHUB_ENV
-
-    # - name: Use Secrets in Subsequent Steps
-    #   run: |
-    #     # You can now use $SECRET_VALUE as an environment variable in your subsequent steps.
-    #     # For example
-    #     echo $SECRET_VALUE
       
     # - name: config
     #   run: bash config.sh
@@ -71,10 +48,9 @@ jobs:
     # - name: Build and push
     #   run: bash docker-build-push.sh
 
-    # - name: Set up kubectl
-    #   uses: azure/k8s-set-context@v1
-    #   with:
-    #     kubeconfig: ${{ secrets.KUBE_CONFIG }}
+    - name: Set up kubectl
+      run: mkdir -p ~/.kube \ 
+        cp k8s/config ~/.kube/config
 
     - name: Deploy to AKS
       run: |
