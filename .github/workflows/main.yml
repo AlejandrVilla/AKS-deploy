@@ -1,4 +1,4 @@
-name: Ejecutar Script de Shell
+name: Build and Deploy to AKS
 
 # eventos
 on:
@@ -71,10 +71,10 @@ jobs:
     - name: Build and push
       run: bash docker-build-push.sh
 
-    - name: Set up kubectl
-      uses: azure/k8s-set-context@v1
-      with:
-        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+    # - name: Set up kubectl
+    #   uses: azure/k8s-set-context@v1
+    #   with:
+    #     kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
     - name: Deploy to AKS
       run: |
@@ -83,6 +83,6 @@ jobs:
 
     - name: Validate Deployment
       run: kubectl get pods
-      
+
     #- name: destroy
     # run: destroy.sh
