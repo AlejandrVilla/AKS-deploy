@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: my-app-container
-        image: avhacr.azure.io/openjdk17:1.0
+        image: avherrera/openjdk17:1.0
         ports:
         - containerPort: 80
-      imagePullSecrets:
-      - name: acr-secret
+      # imagePullSecrets:
+      # - name: acr-secret
