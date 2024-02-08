@@ -20,7 +20,7 @@ jobs:
     - name: Check versions
       run: bash pre-init.sh
     
-    # - name: Azure login
+    - name: Azure login
     #   run: az login
       uses: azure/login@v1
       with:
