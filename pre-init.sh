@@ -12,7 +12,7 @@ java --version
     echo "actualizando openjdk"
     sudo apt-cache search openjdk
     sudo apt install openjdk-17-jdk -y
-fi
+# fi
 
 docker -v
 if [ $? != 0 ]; then
