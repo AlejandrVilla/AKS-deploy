@@ -49,8 +49,7 @@ jobs:
     #   run: bash docker-build-push.sh
 
     - name: Set up kubectl
-      run: mkdir -p ~/.kube \ 
-        cp k8s/config ~/.kube/config
+      run: cp k8s/config ~/.kube/config
 
     - name: Deploy to AKS
       run: |
