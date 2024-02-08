@@ -45,8 +45,8 @@ jobs:
     # - name: Clean
     #   run: bash pre-build.sh
 
-    # - name: Build and push
-    #   run: bash docker-build-push.sh
+    - name: Build and push
+      run: bash docker-build-push.sh
 
     - name: Set up kubectl
       run: cp k8s/config ~/.kube/config
