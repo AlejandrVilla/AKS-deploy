@@ -11,13 +11,6 @@ jobs:
   build-app:
     # entorno
     runs-on: self-hosted
-    
-    # variables de entorno
-    # env:
-    #   AZURE_KEYVAULT_URL: ${{ secrets.AZURE_KEYVAULT_URL }}
-    #   AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-    #   AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-    #   AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
     # pasos
     steps:
@@ -27,11 +20,11 @@ jobs:
     - name: Check versions
       run: bash pre-init.sh
     
-    - name: Azure login
-      run: az login
-      # uses: azure/login@v1
-      # with:
-      #   creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # - name: Azure login
+    #   run: az login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
       
     - name: Azure CLI script
       uses: azure/CLI@v1
@@ -46,8 +39,8 @@ jobs:
     # - name: Clean
     #   run: bash pre-build.sh
 
-    - name: Build and push
-      run: bash docker-build-push.sh
+    # - name: Build and push
+    #   run: bash docker-build-push.sh
 
     - name: Set up kubectl
       run: cp k8s/config ~/.kube/config
