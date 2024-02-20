@@ -1,24 +1,20 @@
 name: Build and Deploy to AKS
 
-# eventos
 on:
   push:
     branches:
       - main
 
-# jobs en el flujo de trabajo
+# jobs in workflow
 jobs:
   build-app:
-    # entorno
+    # environment
     runs-on: self-hosted
 
-    # pasos
+    # steps
     steps:
     - name: Checkout of source code
       uses: actions/checkout@v2
-
-    - name: Check versions
-      run: bash pre-init.sh
     
     - name: Azure login
     #   run: az login
