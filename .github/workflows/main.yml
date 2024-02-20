@@ -32,26 +32,27 @@ jobs:
         azcliversion: latest
         inlineScript: |
           az account show
-      
-    # - name: config
-    #   run: bash config.sh
 
-    # - name: Clean
-    #   run: bash pre-build.sh
-
-    # - name: Build and push
-    #   run: bash docker-build-push.sh
-
+    # aks kubeconfig
     - name: Set up kubectl
       run: cp k8s/config ~/.kube/config
 
+    # deplot to aks
     - name: Deploy to AKS
       run: |
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
 
+    # get pods
     - name: Validate Deployment
       run: kubectl get pods
 
-    #- name: destroy
-    # run: destroy.sh
+    # Rollback on Failure
+    - name: Rollback on Failure
+      if: failure()
+      run: |
+        # Obtener el número de revisión anterior
+        PREVIOUS_REVISION=$(kubectl rollout history deployment/openjdk17-deployment --revision=0 --output=jsonpath={.revision})
+
+        # Realizar el rollback
+        kubectl rollout undo deployment/openjdk17-deployment --to-revision=${PREVIOUS_REVISION}

@@ -17,5 +17,6 @@ spec:
         image: avherrera/openjdk17:1.0
         ports:
         - containerPort: 80
+      # para ACR
       # imagePullSecrets:
       # - name: acr-secret
